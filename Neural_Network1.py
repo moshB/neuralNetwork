@@ -2,70 +2,6 @@ import random
 
 import data_set_generator
 
-import numpy as np
-
-class NeuralNetwork:
-    def __init__(self, input_size, hidden_size1, hidden_size2, output_size):
-        # Initialize weights and biases with random values
-        self.w1 = np.random.rand(input_size, hidden_size1)
-        self.b1 = np.zeros((1, hidden_size1))  # Bias for first hidden layer
-        self.w2 = np.random.rand(hidden_size1, hidden_size2)
-        self.b2 = np.zeros((1, hidden_size2))  # Bias for second hidden layer
-        self.w3 = np.random.rand(hidden_size2, output_size)
-        self.b3 = np.zeros((1, output_size))  # Bias for output layer
-
-        # Choose an activation function (e.g., sigmoid, ReLU)
-        self.activation_func = self.sigmoid  # Placeholder, replace with your desired function
-
-    def sigmoid(self, x):
-        """Sigmoid activation function (example)"""
-        return 1 / (1 + np.exp(-x))
-
-    def predict(self, x):
-        """Forward pass to calculate output"""
-        z1 = np.dot(x, self.w1) + self.b1  # Weighted sum at hidden layer 1
-        a1 = self.activation_func(z1)  # Apply activation function
-
-        z2 = np.dot(a1, self.w2) + self.b2  # Weighted sum at hidden layer 2
-        a2 = self.activation_func(z2)  # Apply activation function
-
-        z3 = np.dot(a2, self.w3) + self.b3  # Weighted sum at output layer
-        output = self.activation_func(z3)  # Apply activation function (can be different for output)
-
-        return output
-
-    def train(self, learning_rate, epochs, X_train, y_train):
-        """Train the network using backpropagation"""
-        for epoch in range(epochs):
-            for i, x in enumerate(X_train):  # Iterate through each training example
-                # Forward pass
-                z1 = np.dot(x, self.w1) + self.b1
-                a1 = self.activation_func(z1)
-
-                z2 = np.dot(a1, self.w2) + self.b2
-                a2 = self.activation_func(z2)
-
-                z3 = np.dot(a2, self.w3) + self.b3
-                output = self.activation_func(z3)
-
-                # Calculate error (adjust based on your loss function, e.g., cross-entropy)
-                error = y_train[i] - output
-
-                # Backpropagation
-                delta3 = error * self.activation_func(z3, derivative=True)  # Output layer delta
-                delta2 = np.dot(delta3, self.w3.T) * self.activation_func(z2, derivative=True)  # Hidden layer 2 delta
-                delta1 = np.dot(delta2, self.w2.T) * self.activation_func(z1, derivative=True)  # Hidden layer 1 delta
-
-                # Update weights and biases with gradients
-                self.w3 -= learning_rate * np.dot(a2.T, delta3)
-                self.b3 -= learning_rate * delta3
-
-                self.w2 -= learning_rate * np.dot(a1.T, delta2)
-                self.b2 -= learning_rate * delta2
-
-                self.w1 -= learning_rate * np.dot(x.T, delta1)
-                self.b1 -= learning_rate * delta1
-
 
 
 
@@ -103,7 +39,7 @@ second_hidden_layer=[]
 output_layer=[]
 # def training_model():
 #     for set in dataset:
-        # input_layer+=set
+#         input_layer+=set
 
 
 

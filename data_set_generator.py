@@ -238,18 +238,8 @@ def show_image(img,name):
 # print(img)
 # for it in img:
 #     print(it)
-s, t = generate_dataset(10, 100)
-#
+s, t = generate_dataset(1, 10)
+for it in s:
+    print(it)
 # for i in range(len(s)):
 #     show_image(s[i],t[i])
-print(random.random())
-print(random.random())
-print(random.random())
-print(random.random())
-print(random.random())
-print(random.random())
-print(random.random())
-print(random.random())
-print(random.random())
-print(random.random())
-print(random.random())
