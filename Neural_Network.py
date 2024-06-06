@@ -20,6 +20,9 @@ class NeuralNetwork:
     def sigmoid(self, x):
         """Sigmoid activation function (example)"""
         return 1 / (1 + np.exp(-x))
+    def dif_sigmoid(self, x):
+        return np.exp(-x) / ((1 + np.exp(-x))**2)
+
 
     def predict(self, x):
         """Forward pass to calculate output"""
@@ -35,36 +38,69 @@ class NeuralNetwork:
         return output
 
     def train(self, learning_rate, epochs, X_train, y_train):
+        for i in range(len(X_train)):
+            # print(i)
+            x=X_train[i][0]
+            # Forward pass
+            z1 = np.dot(x, self.w1) + self.b1
+            a1 = self.activation_func(z1)
+
+            z2 = np.dot(a1, self.w2) + self.b2
+            a2 = self.activation_func(z2)
+
+            z3 = np.dot(a2, self.w3) + self.b3
+            output = self.activation_func(z3)
+
+            d3 = self.dif_sigmoid(z3) * (y_train[i] - output)
+            self.w3 -= np.dot(a2.T, d3)
+            d2 = self.dif_sigmoid(z2) * (sum(sum(d3)))
+            self.w2 -= np.dot(a1.T, d2)
+            d1 = self.dif_sigmoid(z1) * (sum(sum(d2)))
+            self.w1 -= np.dot(x.T, d1)
+
+
+
         """Train the network using backpropagation"""
-        for epoch in range(epochs):
-            for i, x in enumerate(X_train):  # Iterate through each training example
-                # Forward pass
-                z1 = np.dot(x, self.w1) + self.b1
-                a1 = self.activation_func(z1)
+        # for epoch in range(epochs):
+        #     for i, x in enumerate(X_train):  # Iterate through each training example
+        #         # Forward pass
+        #         z1 = np.dot(x, self.w1) + self.b1
+        #         a1 = self.activation_func(z1)
+        #
+        #         z2 = np.dot(a1, self.w2) + self.b2
+        #         a2 = self.activation_func(z2)
+        #
+        #         z3 = np.dot(a2, self.w3) + self.b3
+        #         output = self.activation_func(z3)
+        #
+        #         # Calculate error (adjust based on your loss function, e.g., cross-entropy)
+        #         error = y_train[i] - output
+        #         d3 = self.dif_sigmoid(z3)*(y_train[i]-output)
+        #         self.w3 += np.dot(a2.T, d3)
+        #         d2 = self.dif_sigmoid(z2)*(sum(sum(d3)))
+        #         self.w2+=np.dot(a1.T, d2)
+        #         d1 = self.dif_sigmoid(z1)*(sum(sum(d2)))
+        #         self.w1+=np.dot(x.T, d1)
+        #
 
-                z2 = np.dot(a1, self.w2) + self.b2
-                a2 = self.activation_func(z2)
-
-                z3 = np.dot(a2, self.w3) + self.b3
-                output = self.activation_func(z3)
-
-                # Calculate error (adjust based on your loss function, e.g., cross-entropy)
-                error = y_train[i] - output
 
                 # Backpropagation
-                delta3 = error * self.activation_func(z3, derivative=True)  # Output layer delta
-                delta2 = np.dot(delta3, self.w3.T) * self.activation_func(z2, derivative=True)  # Hidden layer 2 delta
-                delta1 = np.dot(delta2, self.w2.T) * self.activation_func(z1, derivative=True)  # Hidden layer 1 delta
-
-                # Update weights and biases with gradients
-                self.w3 -= learning_rate * np.dot(a2.T, delta3)
-                self.b3 -= learning_rate * delta3
-
-                self.w2 -= learning_rate * np.dot(a1.T, delta2)
-                self.b2 -= learning_rate * delta2
-
-                self.w1 -= learning_rate * np.dot(x.T, delta1)
-                self.b1 -= learning_rate * delta1
+                # delta3 = error * self.activation_func(z3)#, derivative=True)  # Output layer delta
+                # delta2 = np.dot(delta3, self.w3.T) * self.activation_func(z2)#, derivative=True)  # Hidden layer 2 delta
+                # delta1 = np.dot(delta2, self.w2.T) * self.activation_func(z1)#, derivative=True)  # Hidden layer 1 delta
+                #
+                # # Update weights and biases with gradients
+                # self.w3 -= learning_rate * np.dot(a2.T, delta3)
+                # print(sum(delta3))
+                # # print(learning_rate * delta3)
+                # # print(self.b3)
+                # self.b3 -= learning_rate * delta3
+                #
+                # self.w2 -= learning_rate * np.dot(a1.T, delta2)
+                # self.b2 -= learning_rate * delta2
+                #
+                # self.w1 -= learning_rate * np.dot(x.T, delta1)
+                # self.b1 -= learning_rate * delta1
 
 
 
@@ -82,25 +118,25 @@ class NeuralNetwork:
 #
 #     return train_images, val_images, test_images, train_labels, val_labels, test_labels
 
-
-# Generate dataset
-num_images = 1000
-image_size = 100
-dataset, labels = data_set_generator.generate_dataset(num_images, image_size)
-
-size_input_layer= image_size ** 2
-size_first_hidden_layer=int(size_input_layer / 2)
-size_second_hidden_layer=int(size_first_hidden_layer / 2)
-size_output_layer=1
-
-synapses_input_to_first_hidden_layer = [random.random() for _ in range(size_input_layer * size_first_hidden_layer)]
-synapses_first_hidden_to_second_hidden_layer= [random.random() for _ in range(size_second_hidden_layer * size_first_hidden_layer)]
-synapses_second_hidden_to_output_layer= [random.random() for _ in range(size_output_layer * size_second_hidden_layer)]
-
-input_layer= []
-first_hidden_layer=[]
-second_hidden_layer=[]
-output_layer=[]
+#
+# # Generate dataset
+# num_images = 1000
+# image_size = 100
+# dataset, labels = data_set_generator.generate_dataset(num_images, image_size)
+#
+# size_input_layer= image_size ** 2
+# size_first_hidden_layer=int(size_input_layer / 2)
+# size_second_hidden_layer=int(size_first_hidden_layer / 2)
+# size_output_layer=1
+#
+# synapses_input_to_first_hidden_layer = [random.random() for _ in range(size_input_layer * size_first_hidden_layer)]
+# synapses_first_hidden_to_second_hidden_layer= [random.random() for _ in range(size_second_hidden_layer * size_first_hidden_layer)]
+# synapses_second_hidden_to_output_layer= [random.random() for _ in range(size_output_layer * size_second_hidden_layer)]
+#
+# input_layer= []
+# first_hidden_layer=[]
+# second_hidden_layer=[]
+# output_layer=[]
 # def training_model():
 #     for set in dataset:
         # input_layer+=set

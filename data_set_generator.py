@@ -10,6 +10,39 @@ from matplotlib import pyplot as plt
 matplotlib.use('TkAgg')  # Change to another backend if needed
 
 
+def generate_random_circle(image_size):
+  """
+  This function generates a random circle image of the specified size.
+
+  Args:
+      image_size (int): The size (width and height) of the desired image.
+
+  Returns:
+      numpy.ndarray: A 2D NumPy array representing the circle image, where 1 represents
+                     filled pixels and 0 represents empty pixels.
+  """
+
+  # Create an empty image array with all zeros
+  image = np.zeros((image_size, image_size), dtype=np.uint8)  # Adjust dtype if necessary
+
+  # Ensure radius is within image bounds for proper circle placement
+  max_radius = min(image_size // 2 - 1, 255)  # Consider buffer for edge pixels
+
+  # Generate random center coordinates within the valid range
+  center_x = random.randint(max_radius + 1, image_size - max_radius - 1)
+  center_y = random.randint(max_radius + 1, image_size - max_radius - 1)
+
+  # Generate random radius within the valid range
+  radius = random.randint(1, max_radius)  # Ensure a minimum radius of 1
+
+  # Iterate through each pixel and check if it falls within the circle
+  for y in range(image_size):
+    for x in range(image_size):
+      distance_from_center = np.sqrt(((x - center_x) ** 2) + ((y - center_y) ** 2))
+      if distance_from_center <= radius:
+        image[y, x] = 1  # Mark pixel as filled if inside the circle
+
+  return image
 def generate_random_trapezoid(image_size):
     """
   Generates a random trapezoid within a square image of specified size.
@@ -58,7 +91,7 @@ def generate_random_trapezoid(image_size):
         right_x = min(top_right_x + (width - top_shift) // 2 - (x - top_left_y) // (height - top_shift) * (width // 2),
                       max_x)
         for x in range(int(left_x), int(right_x) + 1):
-            img[y, x] = 1
+            img[y-1, x-1] = 1#todo
 
     return img
 
@@ -155,44 +188,8 @@ def is_inside_triangle(x, y, v1_x, v1_y, v2_x, v2_y, v3_x, v3_y):
     return (abs(total_area - (area_a + area_b + area_c)) < 1e-6)
 
 
-def generate_scratch(image_size):
-    img = np.zeros((image_size, image_size), dtype=np.uint8)
-
-    # Randomly choose start and end points for the line
-    start_point = (np.random.randint(10, image_size - 20), np.random.randint(10, image_size - 20))
-    end_point = (np.random.randint(10, image_size - 20), np.random.randint(10, image_size - 20))
-
-    # Draw the line
-    cv2.line(img, start_point, end_point, 255, 3)
-
-    return img
 
 
-def generate_dirt_stain(image_size):
-    img = np.zeros((image_size, image_size), dtype=np.uint8)
-
-    # Ensure that the center, radius, and frequency are valid
-    center = (np.random.randint(20, image_size - 20), np.random.randint(20, image_size - 20))
-    num_ellipses = np.random.randint(3, 5)  # Randomly choose the number of ellipses
-
-    for _ in range(num_ellipses):
-        # Randomly determine the size and orientation of each ellipse
-        major_axis = np.random.randint(5, 15)
-        minor_axis = np.random.randint(3, 8)
-        angle = np.random.uniform(0, 2 * np.pi)
-
-        # Randomly determine the position of each ellipse
-        offset_x = np.random.randint(-5, 5)
-        offset_y = np.random.randint(-5, 5)
-
-        # Calculate the ellipse parameters
-        ellipse_center = (center[0] + offset_x, center[1] + offset_y)
-        ellipse_axes = (major_axis, minor_axis)
-
-        # Draw the ellipse
-        cv2.ellipse(img, ellipse_center, ellipse_axes, angle, 0, 360, 255, -1)
-
-    return img
 
 
 def generate_dataset(num_images, image_size):
@@ -208,7 +205,7 @@ def generate_dataset(num_images, image_size):
             img = generate_random_rectangle(image_size)
             label = 0.5  # 1 represents scratch
         else:
-            img = generate_random_trapezoid(image_size)
+            img = generate_random_circle(image_size)#todo generate_random_trapezoid
             label = 1  # 2 represents dirt stain
 
         dataset.append(img)
@@ -238,8 +235,10 @@ def show_image(img,name):
 # print(img)
 # for it in img:
 #     print(it)
-s, t = generate_dataset(1, 10)
-for it in s:
-    print(it)
+# s, t = generate_dataset(1, 10)
+# for it in s:
+#     print(it)
 # for i in range(len(s)):
 #     show_image(s[i],t[i])
+# img = generate_random_circle(100)
+# show_image(img,23)

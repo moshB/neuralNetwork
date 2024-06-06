@@ -1,6 +1,7 @@
 import random
 
 import data_set_generator
+import Neural_Network
 
 
 
@@ -20,14 +21,44 @@ import data_set_generator
 
 
 # Generate dataset
-num_images = 1000
-image_size = 100
+num_images = 20
+image_size = 10
 dataset, labels = data_set_generator.generate_dataset(num_images, image_size)
-
-size_input_layer= image_size ** 2
+# print(dataset)
+# print(labels)
+size_input_layer= 100#len(dataset)*len(dataset[0])#image_size ** 2
 size_first_hidden_layer=int(size_input_layer / 2)
 size_second_hidden_layer=int(size_first_hidden_layer / 2)
 size_output_layer=1
+input_layer= []
+# print(dataset)
+# print(labels)
+for set in dataset:
+    s=[]
+    for i in set:
+        for j in i:
+            s.append(j)
+    input_layer.append(s)
+        # for j in i:
+        #     input_layer.append(j)
+    # input_layer= input_layer + set
+# print(input_layer)
+# print(len(input_layer))
+output_layer= []
+for l in labels:
+    output_layer.append(l)
+# print(output_layer)
+# print(labels)
+# print(input_layer)
+# print(dataset)
+nn = Neural_Network.NeuralNetwork(size_input_layer,size_first_hidden_layer,size_second_hidden_layer,size_output_layer)
+nn.train(1,1,input_layer[:10],output_layer[:10])
+# print(nn.b1)
+# print(nn.w1)
+pr = nn.predict(input_layer[10:])
+an = output_layer[10:]
+print(pr)
+print(an)
 
 synapses_input_to_first_hidden_layer = [random.random() for _ in range(size_input_layer * size_first_hidden_layer)]
 synapses_first_hidden_to_second_hidden_layer= [random.random() for _ in range(size_second_hidden_layer * size_first_hidden_layer)]
