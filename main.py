@@ -1,5 +1,16 @@
+from decimal import Decimal, getcontext
 
-a=[]
-a+=[1,2]
-a+=[1,2]
-print(a)
+# Set the precision to 200 digits
+getcontext().prec = 200
+
+# Perform calculations with high precision
+num1 = Decimal('1.23456745678543747958709680909980989097853241389')
+num2 = Decimal(3.43564789097865432412433576)
+
+result = num1 * num2*2
+
+# Print the result with 200 digits
+l = [1,8,'4']
+for s, x in l:
+    print(s)
+    print(x)
