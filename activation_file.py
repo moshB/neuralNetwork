@@ -12,7 +12,7 @@ dataset, labels = data_set_generator.generate_dataset(num_images, image_size)
 size_input_layer= image_size**2#len(dataset)*len(dataset[0])#image_size ** 2
 size_first_hidden_layer=70#int(size_input_layer**0.5)#int(size_input_layer / 2)
 size_second_hidden_layer=50#int(size_first_hidden_layer / 2)
-size_output_layer=1
+size_output_layer=3
 input_layer= []
 # print(dataset)
 # print(labels)
