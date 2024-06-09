@@ -196,9 +196,4 @@ class NeuralNetwork:
     #
     #         # todo w2 w1
     #     print()
-# <<<<<<< HEAD
-#
-#
-#
-# =======
-# >>>>>>> 78f9d83 (decimal)
+
