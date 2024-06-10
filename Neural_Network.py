@@ -112,17 +112,22 @@ class NeuralNetwork:
                 # Backpropagation
                 delta_output = output - y_train[i]  # Error between predicted and desired output
 
+                print('delta_output')
+                print(delta_output)
+                print(output)
+                print(y_train[i])
+
                 # Output layer weight update
                 delta_w3 = learning_rate * np.outer(a2, delta_output)
-                self.w3 += delta_w3
+                self.w3 -= delta_w3
 
                 # Update bias for output layer
-                self.b3 += learning_rate * delta_output
+                self.b3 -= learning_rate * delta_output
 
                 # Hidden layer 2 weight update
                 delta_a2 = self.dif_sigmoid(z2) * (np.dot(delta_output, self.w3.T))
                 delta_w2 = learning_rate * np.outer(a1, delta_a2)
-                self.w2 += delta_w2
+                self.w2 -= delta_w2
 
                 # Update bias for hidden layer 2
                 self.b2 += learning_rate * delta_a2

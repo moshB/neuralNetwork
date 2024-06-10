@@ -1,16 +1,20 @@
 from decimal import Decimal, getcontext
 
+import numpy as np
+
 # Set the precision to 200 digits
-getcontext().prec = 200
-
+v=[1,2]
+u=[1,2]
+a=np.outer(3,3)
+print(a)
 # Perform calculations with high precision
-num1 = Decimal('1.23456745678543747958709680909980989097853241389')
-num2 = Decimal(3.43564789097865432412433576)
-
-result = num1 * num2*2
-
-# Print the result with 200 digits
-l = [1,8,'4']
-for s, x in l:
-    print(s)
-    print(x)
+# num1 = Decimal('1.23456745678543747958709680909980989097853241389')
+# num2 = Decimal(3.43564789097865432412433576)
+#
+# result = num1 * num2*2
+#
+# # Print the result with 200 digits
+# l = [1,8,'4']
+# for s, x in l:
+#     print(s)
+#     print(x)
