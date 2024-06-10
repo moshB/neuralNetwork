@@ -112,22 +112,44 @@ class NeuralNetwork:
                 # Backpropagation
                 delta_output = output - y_train[i]  # Error between predicted and desired output
 
-                print('delta_output')
-                print(delta_output)
-                print(output)
-                print(y_train[i])
+                # print('delta_output')
+                # print(delta_output)
+                # print(output)
+                # print(y_train[i])
 
                 # Output layer weight update
                 delta_w3 = learning_rate * np.outer(a2, delta_output)
+                # print('___old______w3')
+                # print(len(self.w3))
+                # print(self.w3[0])
                 self.w3 -= delta_w3
+                # print('____new_____w3')
+                # print(len(self.w3))
+                # print(self.w3[0])
+                # print('delta_w3')
+
+                # print(len(delta_w3))
+                # print(delta_w3[0])
+
 
                 # Update bias for output layer
                 self.b3 -= learning_rate * delta_output
+                # print('b')
+                # print(self.b3)
 
                 # Hidden layer 2 weight update
                 delta_a2 = self.dif_sigmoid(z2) * (np.dot(delta_output, self.w3.T))
+                # print('delta_a2')
+                # print(delta_a2)
+                # print(a2)
                 delta_w2 = learning_rate * np.outer(a1, delta_a2)
+                # print('delta_w2')
+                # print(len(delta_w2))
+                # print(self.w2[0])
+                # print(delta_w2[0])
                 self.w2 -= delta_w2
+                # print(self.w2[0])
+
 
                 # Update bias for hidden layer 2
                 self.b2 += learning_rate * delta_a2
@@ -135,13 +157,13 @@ class NeuralNetwork:
                 # Hidden layer 1 weight update
                 delta_a1 = self.dif_sigmoid(z1) * (np.dot(delta_a2, self.w2.T))
                 delta_w1 = learning_rate * np.outer(x, delta_a1)
-                self.w1 += delta_w1
+                self.w1 -= delta_w1
 
                 # Update bias for hidden layer 1
                 self.b1 += learning_rate * delta_a1
 
             # Print progress after each epoch
-            print('|', end="")
+            print('|',epoch, end="")
         print()
 
     # def train(self, learning_rate, epochs, X_train, y_train):

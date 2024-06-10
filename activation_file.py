@@ -4,14 +4,14 @@ import data_set_generator
 import Neural_Network
 
 # Generate dataset
-num_images = 500
-image_size = 10
+num_images = 1000
+image_size = 50
 dataset, labels = data_set_generator.generate_dataset(num_images, image_size)
 # print(dataset)
 # print(labels)
 size_input_layer= image_size**2#len(dataset)*len(dataset[0])#image_size ** 2
-size_first_hidden_layer=45#int(size_input_layer**0.5)#int(size_input_layer / 2)
-size_second_hidden_layer=20#int(size_first_hidden_layer / 2)
+size_first_hidden_layer=300#int(size_input_layer**0.5)#int(size_input_layer / 2)
+size_second_hidden_layer=100#int(size_first_hidden_layer / 2)
 size_output_layer=3
 input_layer= []
 # print(dataset)
@@ -28,7 +28,7 @@ for l in labels:
     output_layer.append(l)
 
 nn = Neural_Network.NeuralNetwork(size_input_layer,size_first_hidden_layer,size_second_hidden_layer,size_output_layer)
-nn.train(0.0001,100,input_layer[:num_images-7],output_layer[:num_images-7])
+nn.train(0.2,100,input_layer[:num_images-7],output_layer[:num_images-7])
 
 pr = nn.predict(input_layer[num_images-7:])
 an = output_layer[num_images-7:]
