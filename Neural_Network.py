@@ -53,13 +53,13 @@ class NeuralNetwork:
         outputs=[]
         for x in X:
             """Forward pass to calculate output"""
-            z1 = np.dot(x, self.w1) #+ self.b1  # Weighted sum at hidden layer 1
+            z1 = np.dot(x, self.w1) + self.b1  # Weighted sum at hidden layer 1
             a1 = self.activation_func(z1)  # Apply activation function
 
-            z2 = np.dot(a1, self.w2) #+ self.b2  # Weighted sum at hidden layer 2
+            z2 = np.dot(a1, self.w2) + self.b2  # Weighted sum at hidden layer 2
             a2 = self.activation_func(z2)  # Apply activation function
 
-            z3 = np.dot(a2, self.w3) #+ self.b3  # Weighted sum at output layer
+            z3 = np.dot(a2, self.w3) + self.b3  # Weighted sum at output layer
             output = self.activation_func(z3)  # Apply activation function (can be different for output)
             outputs.append(output)
         return outputs
@@ -107,17 +107,17 @@ class NeuralNetwork:
             for i in range(len(X_train)):
                 # Forward pass
                 x = X_train[i]
-                z1 = np.dot(x, self.w1) #+ self.b1
+                z1 = np.dot(x, self.w1) + self.b1
                 a1 = self.sigmoid(z1)
 
-                z2 = np.dot(a1, self.w2) #+ self.b2
+                z2 = np.dot(a1, self.w2) + self.b2
                 a2 = self.sigmoid(z2)
 
-                z3 = np.dot(a2, self.w3) #+ self.b3
+                z3 = np.dot(a2, self.w3) + self.b3
                 output = self.sigmoid(z3)
 
                 # Backpropagation
-                # delta_output = output - y_train[i]  # Error between predicted and desired output
+                delta_output = output - y_train[i]  # Error between predicted and desired output
                 e_output = output - y_train[i]  # Error between predicted and desired output
                 # print(y_train[i])
                 # print(e_output)
@@ -135,7 +135,7 @@ class NeuralNetwork:
                 # print(a2)
                 self.w3 += learning_rate*np.outer(a2,delta_w3)
                 # Update bias for output layer
-                # self.b3 -= learning_rate * delta_output
+                self.b3 += learning_rate * delta_output
                 # self.b3 -= learning_rate * delta_output
                 # print('b')
                 # print(self.b3)
@@ -146,12 +146,12 @@ class NeuralNetwork:
                 sum_dw2=[]
                 for item in self.w3:
                     # print(item)
-                    # print(delta_w3)
-                    sum_dw2.append(self.scalar_product(item,delta_w3))
+                    # print(delta_w3[0])
+                    sum_dw2.append(self.scalar_product(item,delta_w3[0]))
                 # print(sum_dw2)
                 # print(dif2)
 
-                # delta_a2 = self.dif_sigmoid(z2) * (np.dot(delta_output, self.w3.T))
+                delta_a2 = self.dif_sigmoid(z2) * (np.dot(delta_output, self.w3.T))
                 # print('delta_a2')
                 # print(delta_a2)
                 # print(a2)
@@ -170,7 +170,7 @@ class NeuralNetwork:
                     # print(item)
                     # print(delta_w2)
                     # print(self.scalar_product(item, delta_w2[0]))
-                    sum_dw1.append(self.scalar_product(item, delta_w2))
+                    sum_dw1.append(self.scalar_product(item, delta_w2[0]))
                 # print(dif1)
                 # print(sum_dw1)
                 delta_w1 = self.vector_multi(dif1,sum_dw1)
@@ -180,20 +180,41 @@ class NeuralNetwork:
 
                 self.w1 += learning_rate * np.outer(x, delta_w1)
                 # Update bias for hidden layer 2
-                # self.b2 += learning_rate * delta_a2
+                self.b2 += learning_rate * delta_a2
 
                 # Hidden layer 1 weight update
-                # delta_a1 = self.dif_sigmoid(z1) * (np.dot(delta_a2, self.w2.T))
+                delta_a1 = self.dif_sigmoid(z1) * (np.dot(delta_a2, self.w2.T))
                 # delta_w1 = learning_rate * np.outer(x, delta_a1)
                 # self.w1 -= delta_w1
 
                 # Update bias for hidden layer 1
-                # self.b1 += learning_rate * delta_a1
-                # print('|',end='')
+                self.b1 += learning_rate * delta_a1
+                if i%10000==0:
+                    print('|',end='')
 
             # Print progress after each epoch
             print('|',epoch)
         print()
+        # print(type(self.w1))
+        # print(len(self.w2[0]))
+        # print(len(self.w3[0]))
+        w1a = self.w1.tolist()
+        w2a = self.w2.tolist()
+        w3a = self.w3.tolist()
+        b1a = self.b1.tolist()
+        b2a = self.b2.tolist()
+        b3a = self.b3.tolist()
+        data = {
+            "w1": w1a,
+            "w2": w2a,
+            "w3": w3a,
+            "b1": b1a,
+            "b2": b2a,
+            "b3": b3a
+        }
+        json_string = json.dumps(data)
+        with open("data.json", "w") as outfile:
+            outfile.write(json_string)
 
     # def train(self, learning_rate, epochs, X_train, y_train):
     #     for t in range(len(X_train)):#range(len(X_train)):

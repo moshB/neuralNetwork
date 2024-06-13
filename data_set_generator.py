@@ -202,9 +202,9 @@ def generate_dataset(num_images, image_size):
     labels = []
     # r=num_images//10
 
-    for _ in range(num_images):
-        # if num_images//r==0:
-            # print('|',end='')
+    for i in range(num_images):
+        if i%10000==0:
+            print('|',end='')
         defect_type = np.random.choice(['triangle', 'rectangle', 'trapez'])
         if defect_type == 'triangle':
             img = generate_random_triangle(image_size)

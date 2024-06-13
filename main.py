@@ -1,6 +1,16 @@
+import json
 from decimal import Decimal, getcontext
 
 import numpy as np
+data = {
+  "name": "Jason",
+  "age": 30,
+  "city": [1,2,4]
+}
+
+json_string = json.dumps(data)
+with open("data.json", "w") as outfile:
+  outfile.write(json_string)
 
 # Set the precision to 200 digits
 v=[1,2]
