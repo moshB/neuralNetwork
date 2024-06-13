@@ -4,8 +4,9 @@ import numpy as np
 
 # Set the precision to 200 digits
 v=[1,2]
-u=[1,2]
-a=np.outer(3,3)
+u=[1,2,7]
+a=np.outer(v,u)
+# a=v*u#np.dot(v,u)
 print(a)
 # Perform calculations with high precision
 # num1 = Decimal('1.23456745678543747958709680909980989097853241389')
