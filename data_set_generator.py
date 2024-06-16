@@ -208,13 +208,13 @@ def generate_dataset(num_images, image_size):
         defect_type = np.random.choice(['triangle', 'rectangle', 'trapez'])
         if defect_type == 'triangle':
             img = generate_random_triangle(image_size)
-            label = [1.0,0.0,0.0]  # 0 represents bubble
+            label = [0.0]  # 0 represents bubble
         elif defect_type == 'rectangle':
             img = generate_random_rectangle(image_size)
-            label = [0.0,1.0,0.0]  # 1 represents scratch
+            label = [0.5]  # 1 represents scratch
         else:
             img = generate_random_circle(image_size)#todo generate_random_trapezoid
-            label = [0.0,0.0,1.0]  # 2 represents dirt stain
+            label = [1.0]  # 2 represents dirt stain
 
         dataset.append(img)
         # show_image(img,'name')

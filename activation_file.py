@@ -7,7 +7,7 @@ import data_set_generator
 import Neural_Network
 
 # Generate dataset
-num_images = 50000
+num_images =1
 image_size = 10
 dataset, labels = data_set_generator.generate_dataset(num_images, image_size)
 # print(dataset)
@@ -15,7 +15,7 @@ dataset, labels = data_set_generator.generate_dataset(num_images, image_size)
 size_input_layer = image_size ** 2  # len(dataset)*len(dataset[0])#image_size ** 2
 size_first_hidden_layer = 50  # int(size_input_layer**0.5)#int(size_input_layer / 2)
 size_second_hidden_layer = 35  # int(size_first_hidden_layer / 2)
-size_output_layer = 3
+size_output_layer = 1
 input_layer = []
 # print(dataset)
 # print(labels)
@@ -30,10 +30,10 @@ output_layer = []
 for l in labels:
     output_layer.append(l)
 
-nn = Neural_Network.NeuralNetwork(.001013111, size_input_layer, size_first_hidden_layer, size_second_hidden_layer,
+nn = Neural_Network.NeuralNetwork(.51013111, size_input_layer, size_first_hidden_layer, size_second_hidden_layer,
                                   size_output_layer)
-# nn = Neural_Network.NeuralNetwork(.43111,size_input_layer,size_first_hidden_layer,size_second_hidden_layer,size_output_layer)
-# nn.train(.015432, 2, input_layer[:num_images], output_layer[:num_images])
+# nn = Neural_Network.NeuralNetwork(.043111,size_input_layer,size_first_hidden_layer,size_second_hidden_layer,size_output_layer)
+# nn.train(.0015432, 2, input_layer[:num_images], output_layer[:num_images])
 # nn.train(.95432,2000,input_layer[:num_images],output_layer[:num_images])
 # Load the JSON data back into a list
 with open("data.json", "r") as json_file:
@@ -52,7 +52,7 @@ nn.w3=w3
 nn.b1=b1
 nn.b2=b2
 nn.b3=b3
-nn.train(.10019291195432,1,input_layer[:num_images],output_layer[:num_images])
+nn.train(0.5910019291195432,10000,input_layer[:num_images],output_layer[:num_images])
 
 # Print the loaded array (should be identical to the original)
 # print(loaded_arr)

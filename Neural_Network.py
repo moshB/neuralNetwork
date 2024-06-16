@@ -118,6 +118,10 @@ class NeuralNetwork:
 
                 # Backpropagation
                 delta_output = output - y_train[i]  # Error between predicted and desired output
+                # print('delta_output')
+                # print(delta_output)
+                # print(output)
+                # print(y_train[i])
                 e_output = output - y_train[i]  # Error between predicted and desired output
                 # print(y_train[i])
                 # print(e_output)
@@ -270,7 +274,6 @@ class NeuralNetwork:
     #             # todo check
     #             for j in range(self.input_size):
     #                 self.w1[i * self.input_size + j] += d * x[j]
-    #
     #         # todo w2 w1
     #     print()
 
