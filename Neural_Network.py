@@ -1,11 +1,5 @@
-import random
-
 import numpy as np
 import json
-from decimal import Decimal, getcontext
-
-# Set the precision to 200 digits
-getcontext().prec = 20
 
 class NeuralNetwork:
     def __init__(self,a, input_size, hidden_size1, hidden_size2, output_size):
@@ -88,9 +82,6 @@ class NeuralNetwork:
             #     z3.append(z)
             #     output.append(a)
 
-
-
-
     def train(self, learning_rate, epochs, X_train, y_train):
         """
         Trains the neural network using backpropagation.
@@ -118,69 +109,40 @@ class NeuralNetwork:
 
                 # Backpropagation
                 delta_output = output - y_train[i]  # Error between predicted and desired output
-                # print('delta_output')
-                # print(delta_output)
-                # print(output)
-                # print(y_train[i])
                 e_output = output - y_train[i]  # Error between predicted and desired output
-                # print(y_train[i])
-                # print(e_output)
-                # print(output)
-                # print(z3)
 
                 # Output layer weight update
                 # delta_w3 = learning_rate * np.outer(a2, delta_output)
                 dif3 = self.dif_sigmoid(z3)
                 delta_w3 = self.vector_multi(e_output, dif3) #* np.outer(a2, e_output)
 
-                # print(delta_w3)
-                # print(self.w3)
-
-                # print(a2)
                 self.w3 += learning_rate*np.outer(a2,delta_w3)
                 # Update bias for output layer
                 self.b3 += learning_rate * delta_output
                 # self.b3 -= learning_rate * delta_output
-                # print('b')
-                # print(self.b3)
 
                 # Hidden layer 2 weight update
                 # delta_a2 = self.dif_sigmoid(z2) * (np.dot(delta_output, self.w3.T))
                 dif2 = self.dif_sigmoid(z2)
                 sum_dw2=[]
                 for item in self.w3:
-                    # print(item)
-                    # print(delta_w3[0])
                     sum_dw2.append(self.scalar_product(item,delta_w3[0]))
-                # print(sum_dw2)
-                # print(dif2)
+
 
                 delta_a2 = self.dif_sigmoid(z2) * (np.dot(delta_output, self.w3.T))
-                # print('delta_a2')
-                # print(delta_a2)
-                # print(a2)
+
                 # delta_w2 = learning_rate * np.outer(a1, delta_a2)
                 delta_w2 =self.vector_multi(dif2,sum_dw2)# learning_rate * np.outer(a1, delta_a2)
-                # print('delta_w2')
-                # print(len(delta_w2))
-                # print(self.w2[0])
-                # print(delta_w2[0])
                 self.w2 += learning_rate*np.outer(a1,delta_w2)# delta_w2
                 # print(self.w2[0])
                 dif1 = self.dif_sigmoid(z1)
                 sum_dw1 = []
                 # print(self.w2)
                 for item in self.w2:
-                    # print(item)
-                    # print(delta_w2)
-                    # print(self.scalar_product(item, delta_w2[0]))
                     sum_dw1.append(self.scalar_product(item, delta_w2[0]))
-                # print(dif1)
-                # print(sum_dw1)
+
                 delta_w1 = self.vector_multi(dif1,sum_dw1)
-                # print(delta_w1)
-                # print(a1)
-                # print(a2)
+
 
                 self.w1 += learning_rate * np.outer(x, delta_w1)
                 # Update bias for hidden layer 2
@@ -199,9 +161,7 @@ class NeuralNetwork:
             # Print progress after each epoch
             print('|',epoch)
         print()
-        # print(type(self.w1))
-        # print(len(self.w2[0]))
-        # print(len(self.w3[0]))
+
         w1a = self.w1.tolist()
         w2a = self.w2.tolist()
         w3a = self.w3.tolist()
