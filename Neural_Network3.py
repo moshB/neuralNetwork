@@ -21,37 +21,8 @@ class NeuralNetwork:
         """Sigmoid activation function (example)"""
         return 1 / (1 + np.exp(-self.a * x))
 
-    def scalar_product(self, v1, v2):
-        sum = 0
-        for i in range(len(v1)):
-            sum += v1[i] * v2[i]
-        return sum
-
-    def vector_connection(self, v1, v2):
-        v = []
-        for i in range(len(v1)):
-            v.append(v1[i] + v2[i])
-        return v
-
-    def vector_multi(self, v1, v2):
-        v = []
-        for i in range(len(v1)):
-            v.append(v1[i] * v2[i])
-        return v
-
     def dif_sigmoid(self, x):
         return -self.a * np.exp(-self.a * x) / ((1 + np.exp(-self.a * x)) ** 2)
-
-    def forward_pass(self, inputs, y_train):
-
-        for input in inputs:
-            z1 = np.dot(input, self.w1)
-            a1 = self.sigmoid(z1)
-            z2 = np.dot(a1, self.w2)
-            a2 = self.sigmoid(z2)
-            z3 = np.dot(a2, self.w3)
-            a3 = np.dot(z3)
-        return []
 
     def predict(self, X_train):
         outputs = []
@@ -96,7 +67,7 @@ class NeuralNetwork:
                     # if error !=0:
                     #     err = err/error
 
-                    fi_3 = 1  # self.dif_sigmoid(z3)
+                    fi_3 = 1  # selof.dif_sigmid(z3)
                     fi_2 = 1  # self.dif_sigmoid(z2)
                     fi_1 = 1  # self.dif_sigmoid(z1)
 
@@ -115,7 +86,7 @@ class NeuralNetwork:
                     self.w3 += learning_rate * np.outer(a2, delta3)
                     self.w2 += learning_rate * np.outer(a1, delta2)
                     self.w1 += learning_rate * np.outer(input, delta1)
-            r=X_train
+            r = X_train
             # print('--------')
             # print(len(r))
             pr = self.predict(r)
@@ -123,16 +94,16 @@ class NeuralNetwork:
             if epoch % 100 == 0:
                 print('|', end='')
             # for i in range(0,12*3):
-                # p = pr[i:i + 2]
-                # print(p)
-                # for j in range(3):
+            # p = pr[i:i + 2]
+            # print(p)
+            # for j in range(3):
             #         if (max(pr[i:i + 2]) == p[j]) and (i//3) % 3 == j:
             #             count_sucses += 1
             # if count_sucses / (12 * 3) >= 0.6:
-                # print()
-                # print(epoch)
-                # print(count_sucses / (12 * 3))
-                # return epoch
+            # print()
+            # print(epoch)
+            # print(count_sucses / (12 * 3))
+            # return epoch
             elif epoch % 1000 == 0:
                 print()
                 # print(count_sucses )

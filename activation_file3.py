@@ -1,6 +1,3 @@
-import json
-import random
-
 import numpy as np
 
 import data_set
