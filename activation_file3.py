@@ -51,9 +51,8 @@ for group in dataset:
 
 # pr = nn.predict(input_layer)
 
-nn = Neural_Network3.NeuralNetwork(0.4, size_input_layer, 100, 15,
-                                                   size_output_layer)
-ep = nn.train(0.215, 120, input_layer[:8], labels)
+nn = Neural_Network3.NeuralNetwork(10**(-1), 100, 48, 22, 3)
+ep = nn.train(110.915, 20, input_layer[:8], labels)
 print()
 print(ep)
 count_sucses=0
@@ -62,21 +61,13 @@ for i in range(len(pr)):
     for j in range(len(pr[i])):
         if max(pr[i]) == pr[i][j] and i % 3 == j:
             count_sucses += 1
-print('suc= ',(count_sucses/(12*3)))
+# print('suc= ',(count_sucses/(12*3)))
 s = []
-                # print('pr')
-                # print(len(pr))
+
 for j in range(len(pr)):
-                    # print('prj')
-                    # print(pr[j])
-                    # print(labels[j%3])
-                    # print(((pr[j] - labels[j%3]) ** 2))
-                    # print(pr[j] - labels[j%3])
    s.append(sum(((pr[j] - labels[j%3]) ** 2)))
 data = np.array(s)
-                # print('data')
-                # print(pr[0])
-                # print(data)
+
 mean = np.mean(data)
 
 # if mean < minimum + 0.00001:
