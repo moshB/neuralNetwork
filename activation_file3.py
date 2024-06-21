@@ -1,3 +1,5 @@
+import json
+
 import numpy as np
 
 import data_set
@@ -51,13 +53,32 @@ for group in dataset:
 
 # pr = nn.predict(input_layer)
 
-nn = Neural_Network3.NeuralNetwork(10**(-1), 100, 48, 22, 3)
-ep = nn.train(110.915, 20, input_layer[:8], labels)
+nn = Neural_Network3.NeuralNetwork(10**(-3), 100, 48, 21, 3)#5725466701791224
+with open("data.json", "r") as json_file:
+  loaded_data = json.load(json_file)
+
+# Convert the list back to a NumPy array
+w1 = np.array(loaded_data['w1'])
+w2 = np.array(loaded_data['w2'])
+w3 = np.array(loaded_data['w3'])
+nn.w1=w1
+nn.w2=w2
+nn.w3=w3
+# # # b1 = np.array(loaded_data['b1'])
+# # # b2 = np.array(loaded_data['b2'])
+# # # b3 = np.array(loaded_data['b3'])
+
+# nn.b1=b1
+# nn.b2=b2
+# nn.b3=b3
+# print(0.5149607606646166-0.5152482525204005)
+ep = nn.train(245999999908984, 600, input_layer[:], labels)#0.6443239412482759
+
 print()
 print(ep)
 count_sucses=0
-pr = nn.predict(input_layer[8:])#2721917060078633
-for i in range(len(pr)):
+pr = nn.predict(input_layer[:])#47
+for i in range(len(pr)):#26%
     for j in range(len(pr[i])):
         if max(pr[i]) == pr[i][j] and i % 3 == j:
             count_sucses += 1
@@ -73,7 +94,21 @@ mean = np.mean(data)
 # if mean < minimum + 0.00001:
 #                     print('lr = ', lr, ', a = ', a, 'h1= ', h1, 'h2=', h2)
 print(mean)
-print(pr)
+r = 0
+for i in range(len(pr)//3):
+    for j in range(3):
+        if pr[i+j][j]==max(pr[i+j]):
+            print(1,end='')
+            r+=1
+        else:
+            print(0,end='')
+        # print(pr[i+j], end='')
+    print()
+print(len(pr)*3)
+print('r in:', r/(len(pr)*3))
+print(r)
+print(mean)
+
                 # minimum = min(mean, minimum)
 
 

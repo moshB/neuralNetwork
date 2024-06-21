@@ -10,10 +10,11 @@ class NeuralNetwork:
         self.hidden_size2 = hidden_size2
         self.output_size = output_size
         # Initialize weights and biases with random values
-        self.w1 = np.random.rand(input_size, hidden_size1)*2-1
+        self.w1 = np.random.rand(input_size, hidden_size1) * 2 - 1
+        # print(self.w1)
 
-        self.w2 = np.random.rand(hidden_size1, hidden_size2)*2-1
-        self.w3 = np.random.rand(hidden_size2, output_size)*2-1
+        self.w2 = np.random.rand(hidden_size1, hidden_size2) * 2 - 1
+        self.w3 = np.random.rand(hidden_size2, output_size) * 2 - 1
 
         # Choose an activation function (e.g., sigmoid, ReLU)
         self.activation_func = self.sigmoid  # Placeholder, replace with your desired function
@@ -23,7 +24,7 @@ class NeuralNetwork:
         return 1 / (1 + np.exp(-self.a * x))
 
     def dif_sigmoid(self, x):
-        return self.a * np.exp(-self.a * x) / ((1 + np.exp(-self.a * x)) ** 2)
+        return (self.a) * np.exp(-self.a * x) / ((1 + np.exp(-self.a * x)) ** 2)
 
     def predict(self, X_train):
         outputs = []
@@ -62,7 +63,7 @@ class NeuralNetwork:
                     d = ans[col]
 
                     # Backpropagation
-                    error =  (d - output)  # todo small the affect
+                    error = (d - output)  # todo small the affect
                     # err = d - output#todo small the affect
                     # error = (sum(err**2))**0.5/len(err)
                     # if error !=0:
@@ -71,18 +72,24 @@ class NeuralNetwork:
                     fi_3 = self.dif_sigmoid(z3)
                     fi_2 = self.dif_sigmoid(z2)
                     fi_1 = self.dif_sigmoid(z1)
+                    #y'=dy/dx
+                    #dx=dy/y'
 
                     delta3 = error * fi_3
+                    # print('delta3')
+                    # print(delta3)
+                    # print(error)
+                    # print(fi_3)
 
                     sum2 = []
                     for i in range(self.hidden_size2):
                         sum2.append(sum(self.w3[i] * delta3))
                     delta2 = fi_2 * sum2
-                    print('delta2-------------')
-                    print(len(delta2))
-                    print(delta2)
-                    print(fi_2)
-                    print(delta3)
+                    # print('delta2-------------')
+                    # print(len(delta2))
+                    # print(delta2)
+                    # print(fi_2)
+                    # print(delta3)
 
                     sum1 = []
                     for i in range(self.hidden_size1):
@@ -115,3 +122,20 @@ class NeuralNetwork:
                 print()
                 # print(count_sucses )
                 print()
+        w1a = self.w1.tolist()
+        w2a = self.w2.tolist()
+        w3a = self.w3.tolist()
+        # b1a = self.b1.tolist()
+        # b2a = self.b2.tolist()
+        # b3a = self.b3.tolist()
+        data = {
+            "w1": w1a,
+            "w2": w2a,
+            "w3": w3a,
+            # "b1": b1a,
+            # "b2": b2a,
+            # "b3": b3a
+        }
+        json_string = json.dumps(data)
+        with open("data.json", "w") as outfile:
+            outfile.write(json_string)

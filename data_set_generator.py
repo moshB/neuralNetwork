@@ -249,5 +249,5 @@ def show_image(img,name):
 #     print(it)
 # for i in range(len(s)):
 #     show_image(s[i],t[i])
-img = generate_random_triangle(400)
-show_image(img,23)
+# img = generate_random_circle(1000)
+# show_image(img,23)
