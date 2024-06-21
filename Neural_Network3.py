@@ -45,7 +45,7 @@ class NeuralNetwork:
 
     def train(self, learning_rate, epochs, X_train, y_train):
         ans = np.array(y_train)
-        num_groups = 8
+        num_groups = 20
         for epoch in range(epochs):
             for row in range(num_groups):  # len(X_train)):
                 x = X_train[row]
@@ -76,7 +76,7 @@ class NeuralNetwork:
                     #dx=dy/y'
 
                     delta3 = error * fi_3
-                    # print('delta3')
+                    # print('error')
                     # print(delta3)
                     # print(error)
                     # print(fi_3)
@@ -89,7 +89,7 @@ class NeuralNetwork:
                     # print(len(delta2))
                     # print(delta2)
                     # print(fi_2)
-                    # print(delta3)
+                    # print(sum2)
 
                     sum1 = []
                     for i in range(self.hidden_size1):
@@ -136,6 +136,6 @@ class NeuralNetwork:
             # "b2": b2a,
             # "b3": b3a
         }
-        json_string = json.dumps(data)
-        with open("data.json", "w") as outfile:
-            outfile.write(json_string)
+        # json_string = json.dumps(data)
+        # with open("data.json", "w") as outfile:
+        #     outfile.write(json_string)
