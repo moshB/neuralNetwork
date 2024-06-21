@@ -662,19 +662,32 @@ set_imgs = [[[[0, 0, 0, 1, 0, 0, 0, 0, 0, 0],  # 1,1
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]]]
 
-
 def prepare_data():
     input_layer = []
     for group in set_imgs:
-        new_group = []
         for img in group:
             new_img = []
             for row in img:
                 new_img += row
             new_img = np.array(new_img)
-            new_group.append(new_img)
-        input_layer.append(new_group)
-    return np.array(input_layer), np.array(set_ans)
-
+            input_layer.append(new_img)
+    return np.array(input_layer), np.array(set_ans * (len(input_layer) // len(set_ans)))
 
 input_layer, labels = prepare_data()
+print(f'input_layer shape: {input_layer.shape}')
+print(f'labels shape: {labels.shape}')
+# def prepare_data():
+#     input_layer = []
+#     for group in set_imgs:
+#         new_group = []
+#         for img in group:
+#             new_img = []
+#             for row in img:
+#                 new_img += row
+#             new_img = np.array(new_img)
+#             new_group.append(new_img)
+#         input_layer.append(new_group)
+#     return np.array(input_layer), np.array(set_ans)
+#
+#
+# input_layer, labels = prepare_data()

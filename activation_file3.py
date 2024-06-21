@@ -3,7 +3,7 @@ import json
 import numpy as np
 
 import data_set
-import Neural_Network4
+import Neural_Network3
 
 # Generate dataset
 num_images = 1
@@ -53,7 +53,7 @@ for group in dataset:
 
 # pr = nn.predict(input_layer)
 
-nn = Neural_Network4.NeuralNetwork(0.5, 100, 48, 21, 3)#5725466701791224
+nn = Neural_Network3.NeuralNetwork(0.5, 100, 89, 40, 3)#5725466701791224
 with open("data.json", "r") as json_file:
   loaded_data = json.load(json_file)
 
@@ -72,7 +72,7 @@ with open("data.json", "r") as json_file:
 # nn.b2=b2
 # nn.b3=b3
 # print(0.5149607606646166-0.5152482525204005)
-ep = nn.train(0.81, 200, input_layer[:], labels)#0.6647254675567116
+ep = nn.train(0.1, 10000, input_layer[:], labels)#0.6647254675567116
 
 print()
 # print(ep)
