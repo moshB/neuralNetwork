@@ -674,8 +674,21 @@ def prepare_data():
     return np.array(input_layer), np.array(set_ans * (len(input_layer) // len(set_ans)))
 
 input_layer, labels = prepare_data()
-print(f'input_layer shape: {input_layer.shape}')
-print(f'labels shape: {labels.shape}')
+a_s=[[1], [0.5], [0]]
+def prepare_data1():
+    input_layer = []
+    for group in set_imgs:
+        for img in group:
+            new_img = []
+            for row in img:
+                new_img += row
+            new_img = np.array(new_img)
+            input_layer.append(new_img)
+    return np.array(input_layer), np.array(a_s * (len(input_layer) // len(a_s)))
+
+input_layer, labels = prepare_data()
+# print(f'input_layer shape: {input_layer.shape}')
+# print(f'labels shape: {labels.shape}')
 # def prepare_data():
 #     input_layer = []
 #     for group in set_imgs:

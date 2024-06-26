@@ -68,6 +68,8 @@ class NeuralNetwork:
     def train(self, X, y, epochs):
         for epoch in range(epochs):
             output = self.forward(X)
+            #todo בכל צורה וצורה אם חיזוי טוב לא לעדכן משקלים
+            # print(output)
             self.backward(X, y, output)
 
     def predict(self, X):
