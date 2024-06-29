@@ -12,10 +12,10 @@ n3=np.array([1,2,3])
 h = np.zeros((1,2))
 # for f in p:
 #     h+=f*n
-
+print(np.dot(n1,n2))
 # print(p)
 # print(n)
 # print(p*n)
-print(1-n1**2)
-for i in range(1,10,2):
-    print(i)
+# print(1-n1**2)
+# for i in range(1,10,2):
+#     print(i)

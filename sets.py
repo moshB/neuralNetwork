@@ -674,7 +674,8 @@ def prepare_data():
     return np.array(input_layer), np.array(set_ans * (len(input_layer) // len(set_ans)))
 
 input_layer, labels = prepare_data()
-a_s=[[1], [0.5], [0]]
+a_s=[[5/6], [0.5], [1/6]]
+# a_s=[[1], [0.5], [0]]
 def prepare_data1():
     input_layer = []
     for group in set_imgs:

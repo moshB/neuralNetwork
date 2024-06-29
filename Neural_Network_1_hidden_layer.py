@@ -36,9 +36,25 @@ class NeuralNetwork:
     def backward(self, X, y, output):
         m = X.shape[0]
 
+
+
         self.dz2 = output - y
-        # print(f'dz3 shape: {self.dz3.shape}')
+        # print(self.dz2[0])
+        # for i in range(len(self.dz2)):
+        #     if self.dz2[i]<=1/6:
+        #         self.dz2[i]=0
+        # print('self.dz2')
+        # print(self.dz2)
+        # return
+        # if abs([1/12,1])<=1/6:
+        #     self.dz2 = 0
+        #
+        # # print(f'dz3 shape: {self.dz3.shape}')
+        # # print(self.a1.T)
+        # print(len(self.dz2))
+
         self.dw2 = (1 / m) * np.dot(self.a1.T, self.dz2)
+        # print(self.dw2)
         # print(f'dw3 shape: {self.dw3.shape}')
         self.db2 = (1 / m) * np.sum(self.dz2, axis=0, keepdims=True)
         # print(f'db3 shape: {self.db3.shape}')
@@ -70,6 +86,12 @@ class NeuralNetwork:
             output = self.forward(X)
             #todo בכל צורה וצורה אם חיזוי טוב לא לעדכן משקלים
             # print(output)
+            # 0.5
+            # if [0.8] then delta = -0.3
+            # if 0.6 then 0
+
+
+
             self.backward(X, y, output)
 
     def predict(self, X):
