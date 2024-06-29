@@ -686,7 +686,8 @@ def prepare_data1():
             new_img = np.array(new_img)
             input_layer.append(new_img)
     return np.array(input_layer), np.array(a_s * (len(input_layer) // len(a_s)))
-
+# x[2]->x[12]
+# y[2]->x[12]
 input_layer, labels = prepare_data()
 # print(f'input_layer shape: {input_layer.shape}')
 # print(f'labels shape: {labels.shape}')
