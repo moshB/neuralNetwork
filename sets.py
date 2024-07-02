@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 
 set_ans = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
@@ -686,6 +688,24 @@ def prepare_data1():
             new_img = np.array(new_img)
             input_layer.append(new_img)
     return np.array(input_layer), np.array(a_s * (len(input_layer) // len(a_s)))
+def prepare_random_data():
+    input_layer = []
+    for group in set_imgs:
+        for img in group:
+            new_img = []
+            for row in img:
+                new_img += row
+            new_img = np.array(new_img)
+            input_layer.append(new_img)
+    output_layer = a_s * (len(input_layer) // len(a_s))
+    new_inputs=[]
+    new_outputs=[]
+    for i in range(len(input_layer)):
+        rand = random.randint(0,len(input_layer)-1)
+        new_inputs.append(input_layer.pop(rand))
+        new_outputs.append(output_layer.pop(rand))
+    return np.array(new_inputs), np.array(new_outputs)
+
 # x[2]->x[12]
 # y[2]->x[12]
 input_layer, labels = prepare_data()

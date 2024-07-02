@@ -1,5 +1,6 @@
 import numpy as np
 from sets import prepare_data1
+from sets import prepare_random_data
 from Neural_Network_1_hidden_layer import NeuralNetwork
 
 input_layer, labels = prepare_data1()
@@ -16,13 +17,12 @@ predictions = nn.predict(input_layer[:split])  # [1,0,0][0,0.39,0]
 count_success = 0
 for i in range(len(predictions)):
     mod = i % 3
-    if mod == 2 and predictions[i][0] < 1 / 3:
+    if labels[i][0] == 1/6 and predictions[i][0] < 1 / 3:
         count_success += 1
-    elif mod == 1 and predictions[i][0] < 2 / 3 and predictions[i][0] > 1 / 3:
+    elif labels[i][0] == 0.5 and predictions[i][0] < 2 / 3 and predictions[i][0] > 1 / 3:
         count_success += 1
-    elif mod == 0 and predictions[i][0] > 2 / 3:
+    elif labels[i][0] == 5/6 and predictions[i][0] > 2 / 3:
         count_success += 1
-
 accuracy = count_success / len(predictions)
 print(f'Accuracy: {accuracy:.2f}')
 
@@ -44,11 +44,11 @@ while accuracy < 1:
     count_success = 0
     for i in range(len(predictions)):
         mod = i % 3
-        if mod == 2 and predictions[i][0] < 1 / 3:
+        if labels[i][0] == 1 / 6 and predictions[i][0] < 1 / 3:
             count_success += 1
-        elif mod == 1 and predictions[i][0] < 2 / 3 and predictions[i][0] > 1 / 3:
+        elif labels[i][0] == 0.5 and predictions[i][0] < 2 / 3 and predictions[i][0] > 1 / 3:
             count_success += 1
-        elif mod == 0 and predictions[i][0] > 2 / 3:
+        elif labels[i][0] == 5 / 6 and predictions[i][0] > 2 / 3:
             count_success += 1
 
     accuracy = count_success / len(predictions)
@@ -64,11 +64,11 @@ predictions = nn.predict(input_layer[split:])  # [1,0,0][0,0.39,0]
 count_success = 0
 for i in range(len(predictions)):
     mod = i % 3
-    if mod == 2 and predictions[i][0] < 1 / 3:
+    if labels[i+split-1][0] == 1/6 and predictions[i][0] < 1 / 3:
         count_success += 1
-    elif mod == 1 and predictions[i][0] < 2 / 3 and predictions[i][0] > 1 / 3:
+    elif labels[i+split-1][0] == 0.5 and predictions[i][0] < 2 / 3 and predictions[i][0] > 1 / 3:
         count_success += 1
-    elif mod == 0 and predictions[i][0] > 2 / 3:
+    elif labels[i+split-1][0] == 5/6 and predictions[i][0] > 2 / 3:
         count_success += 1
 
 accuracy = count_success / len(predictions)
