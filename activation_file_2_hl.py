@@ -8,7 +8,7 @@ input_layer, labels = prepare_random_data()
 print(f'Input shape: {input_layer.shape}')
 print(f'Labels shape: {labels.shape}')
 split=15*3
-nn = NeuralNetwork(learning_rate=2.999, input_size=100, hidden_size1=90, hidden_size2=32, output_size=1)
+nn = NeuralNetwork(learning_rate=0.1, input_size=100, hidden_size1=90, hidden_size2=32, output_size=1)
 nn.train(input_layer[:split], labels[:split], epochs=1)
 # print(len(input_layer))
 predictions = nn.predict(input_layer[split:])#[1,0,0]<-[0.1,0.5,0.8]
@@ -29,7 +29,7 @@ print(f'Accuracy: {accuracy:.2f}')
 
 
 counter = 1
-while accuracy < 1:
+while accuracy < 0.98:
     counter += 1
     # nn.lr = nn.lr*0.98
     nn.train(input_layer[:split], labels[:split], epochs=1)
