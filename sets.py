@@ -664,7 +664,8 @@ set_imgs = [[[[0, 0, 0, 1, 0, 0, 0, 0, 0, 0],  # 1,1
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]]]
 
-def prepare_data():
+
+def prepare_data2():
     input_layer = []
     for group in set_imgs:
         for img in group:
@@ -675,10 +676,12 @@ def prepare_data():
             input_layer.append(new_img)
     return np.array(input_layer), np.array(set_ans * (len(input_layer) // len(set_ans)))
 
-input_layer, labels = prepare_data()
-a_s=[[5/6], [0.5], [1/6]]
+
+input_layer, labels = prepare_data2()
+a_s = [[5 / 6], [0.5], [1 / 6]]
+
 # a_s=[[1], [0.5], [0]]
-def prepare_data1():
+def prepare_data():
     input_layer = []
     for group in set_imgs:
         for img in group:
@@ -688,6 +691,8 @@ def prepare_data1():
             new_img = np.array(new_img)
             input_layer.append(new_img)
     return np.array(input_layer), np.array(a_s * (len(input_layer) // len(a_s)))
+
+
 def prepare_random_data():
     input_layer = []
     for group in set_imgs:
@@ -698,31 +703,12 @@ def prepare_random_data():
             new_img = np.array(new_img)
             input_layer.append(new_img)
     output_layer = a_s * (len(input_layer) // len(a_s))
-    new_inputs=[]
-    new_outputs=[]
+    new_inputs = []
+    new_outputs = []
+
     for i in range(len(input_layer)):
-        rand = random.randint(0,len(input_layer)-1)
+        rand = random.randint(0, len(input_layer) - 1)
         new_inputs.append(input_layer.pop(rand))
         new_outputs.append(output_layer.pop(rand))
     return np.array(new_inputs), np.array(new_outputs)
 
-# x[2]->x[12]
-# y[2]->x[12]
-input_layer, labels = prepare_data()
-# print(f'input_layer shape: {input_layer.shape}')
-# print(f'labels shape: {labels.shape}')
-# def prepare_data():
-#     input_layer = []
-#     for group in set_imgs:
-#         new_group = []
-#         for img in group:
-#             new_img = []
-#             for row in img:
-#                 new_img += row
-#             new_img = np.array(new_img)
-#             new_group.append(new_img)
-#         input_layer.append(new_group)
-#     return np.array(input_layer), np.array(set_ans)
-#
-#
-# input_layer, labels = prepare_data()
