@@ -6,7 +6,7 @@ input_layer, labels = prepare_data()
 
 print(f'Input shape: {input_layer.shape}')
 print(f'Labels shape: {labels.shape}')
-split = 9 * 3
+split = 15 * 3
 nn = NeuralNetwork(learning_rate=0.1, input_size=100, hidden_size1=90, hidden_size2=32, output_size=1)
 nn.train(input_layer[:split], labels[:split], epochs=1)
 predictions = nn.predict(input_layer[split:])  # [1,0,0]<-[0.1,0.5,0.8]
@@ -53,11 +53,11 @@ predictions = nn.predict(input_layer[split:])  # [1,0,0][0,0.39,0]
 count_success = 0
 for i in range(len(predictions)):
     mod = i % 3
-    if labels[i + split - 1][0] == 1 / 6 and predictions[i][0] < 1 / 3:
+    if labels[i + split ][0] == 1 / 6 and predictions[i][0] < 1 / 3:
         count_success += 1
-    elif labels[i + split - 1][0] == 0.5 and 2 / 3 > predictions[i][0] > 1 / 3:
+    elif labels[i + split][0] == 0.5 and 2 / 3 > predictions[i][0] > 1 / 3:
         count_success += 1
-    elif labels[i + split - 1][0] == 5 / 6 and predictions[i][0] > 2 / 3:
+    elif labels[i + split ][0] == 5 / 6 and predictions[i][0] > 2 / 3:
         count_success += 1
 
 accuracy = count_success / len(predictions)

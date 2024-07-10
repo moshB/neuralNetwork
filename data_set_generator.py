@@ -225,9 +225,6 @@ def generate_dataset(num_images, image_size):
 
 
 def show_image(img,name):
-    """
-  Displays the generated random triangle image.
-  """
     plt.imshow(img, cmap="binary")  # Use binary colormap for clear visualization
     plt.title("Random "+str(name))
     plt.axis("off")  # Hide axes for cleaner presentation

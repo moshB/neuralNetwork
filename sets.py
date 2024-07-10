@@ -1,6 +1,7 @@
 import random
 
 import numpy as np
+from matplotlib import pyplot as plt
 
 set_ans = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
 
@@ -680,6 +681,7 @@ def prepare_data2():
 input_layer, labels = prepare_data2()
 a_s = [[5 / 6], [0.5], [1 / 6]]
 
+
 # a_s=[[1], [0.5], [0]]
 def prepare_data():
     input_layer = []
@@ -712,3 +714,15 @@ def prepare_random_data():
         new_outputs.append(output_layer.pop(rand))
     return np.array(new_inputs), np.array(new_outputs)
 
+
+def show_image(img, name):
+    plt.imshow(img, cmap="binary")  # Use binary colormap for clear visualization
+    # plt.title(str(name))
+    plt.axis("off")  # Hide axes for cleaner presentation
+    plt.show()
+# pd, _ = prepare_data()
+# for p in pd:
+#     print(p)
+#     show_image(p,2)
+
+show_image(set_imgs[0][2],'triangle')
