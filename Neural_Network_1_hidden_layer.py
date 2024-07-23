@@ -7,6 +7,7 @@ class NeuralNetwork:
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.output_size = output_size
+        self.b = 0
 
         # Weight initialization
         self.w1 = np.random.randn(input_size, hidden_size) * 0.01
@@ -24,9 +25,9 @@ class NeuralNetwork:
         return np.exp(- x) / ((1 + np.exp(- x)) ** 2)
 
     def forward(self, X):
-        self.z1 = np.dot(X, self.w1) + self.b1
+        self.z1 = np.dot(X, self.w1) + self.b1*self.b
         self.a1 = self.sigmoid(self.z1)
-        self.z2 = np.dot(self.a1, self.w2) + self.b2
+        self.z2 = np.dot(self.a1, self.w2) + self.b2*self.b
         self.a2 = self.sigmoid(self.z2)
         return self.a2
 

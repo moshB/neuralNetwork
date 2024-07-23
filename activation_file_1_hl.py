@@ -1,16 +1,20 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
 from sets import prepare_data
 from sets import prepare_random_data
 from Neural_Network_1_hidden_layer import NeuralNetwork
+
 
 input_layer, labels = prepare_random_data()
 
 
 split = 15 * 3
-nn = NeuralNetwork(learning_rate=0.1, input_size=100, hidden_size=80, output_size=1)
+nn = NeuralNetwork(learning_rate=5, input_size=100, hidden_size=80, output_size=1)
 nn.train(input_layer[:split], labels[:split], epochs=1)
 predictions = nn.predict(input_layer[:split])  # [1,0,0][0,0.39,0]
-
+x=[]
+y=[]
 count_success = 0
 for i in range(len(predictions)):
     mod = i % 3
@@ -31,6 +35,8 @@ mean_error = np.mean(data)
 print(f'Mean Error: {mean_error:.4f}')
 er = mean_error
 counter = 1
+x.append(counter)
+y.append(accuracy*100)
 while accuracy < 1:
     counter += 1
     nn.train(input_layer[:split], labels[:split], epochs=1)
@@ -47,6 +53,8 @@ while accuracy < 1:
             count_success += 1
 
     accuracy = count_success / len(predictions)
+    x.append(counter)
+    y.append(accuracy*100)
     print(f'Accuracy: {accuracy:.2f}')
 
 print(counter)
@@ -67,3 +75,9 @@ for i in range(len(predictions)):
 
 accuracy = count_success / len(predictions)
 print(f'Accuracy: {accuracy:.2f}')
+plt.plot(x, y)
+plt.xlabel("מספר חזרות")
+plt.ylabel("אחוז הצלחה")
+# plt.title("")
+plt.grid(True)
+plt.show()

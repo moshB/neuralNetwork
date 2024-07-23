@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class NeuralNetwork:
     def __init__(self, learning_rate, input_size, hidden_size1, hidden_size2, output_size):
         self.lr = learning_rate
@@ -7,13 +8,14 @@ class NeuralNetwork:
         self.hidden_size1 = hidden_size1
         self.hidden_size2 = hidden_size2
         self.output_size = output_size
+        self.b = 0
 
         # Weight initialization
-        self.w1 = np.random.randn(input_size, hidden_size1) * 0.01-0.005
+        self.w1 = np.random.randn(input_size, hidden_size1) * 0.01 - 0.005
         self.b1 = np.zeros((1, hidden_size1))
-        self.w2 = np.random.randn(hidden_size1, hidden_size2) * 0.01-0.005
+        self.w2 = np.random.randn(hidden_size1, hidden_size2) * 0.01 - 0.005
         self.b2 = np.zeros((1, hidden_size2))
-        self.w3 = np.random.randn(hidden_size2, output_size) * 0.01-0.005
+        self.w3 = np.random.randn(hidden_size2, output_size) * 0.01 - 0.005
         self.b3 = np.zeros((1, output_size))
 
     def sigmoid(self, z):
@@ -25,11 +27,11 @@ class NeuralNetwork:
         return np.exp(- x) / ((1 + np.exp(- x)) ** 2)
 
     def forward(self, X):
-        self.z1 = np.dot(X, self.w1) + self.b1
+        self.z1 = np.dot(X, self.w1) + self.b1 * self.b
         self.a1 = self.sigmoid(self.z1)
-        self.z2 = np.dot(self.a1, self.w2) + self.b2
+        self.z2 = np.dot(self.a1, self.w2) + self.b2 * self.b
         self.a2 = self.sigmoid(self.z2)
-        self.z3 = np.dot(self.a2, self.w3) + self.b3
+        self.z3 = np.dot(self.a2, self.w3) + self.b3 * self.b
         self.a3 = self.sigmoid(self.z3)
         return self.a3
 

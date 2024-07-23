@@ -715,14 +715,9 @@ def prepare_random_data():
     return np.array(new_inputs), np.array(new_outputs)
 
 
-def show_image(img, name):
-    plt.imshow(img, cmap="binary")  # Use binary colormap for clear visualization
-    # plt.title(str(name))
-    plt.axis("off")  # Hide axes for cleaner presentation
+def show_image(img):
+    plt.imshow(img, cmap="binary")
+    plt.axis("off")
     plt.show()
-# pd, _ = prepare_data()
-# for p in pd:
-#     print(p)
-#     show_image(p,2)
 
-show_image(set_imgs[0][2],'triangle')
+# show_image(set_imgs[0][0])
